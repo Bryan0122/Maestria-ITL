@@ -105,4 +105,4 @@ Para ilustrar el diseño de la clase implementada en el respositorio, se utiliza
 <p style='text-align: justify;'>Por cuestiones esteticas y de espacio en esta seccion no se ilustra todo el contenido del comando 'help' implementado. Adicionalmente, puede encontrar una guia didactica del funcionamiento de la clase en el notebook con nombre 'Cuaderno_guia.ipynb'</p>.
 
 ## Requerimientos <a name='req'></a>
-<p style='text-align: justify;'>Para el correcto funcionamiento de la clase se le sugiere revisar la lista de requerimientos de librerias ilustradas en el archivo 'requeriments.txt'.</p>
+<p style='text-align: justify;'>Para el correcto funcionamiento de la clase se le sugiere revisar la lista de requerimientos de librerias ilustradas en el archivo 'requirements.txt'.</p>
