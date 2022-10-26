@@ -96,11 +96,11 @@ Notese que la solucion es similar a la del gradiente descendiente, con diferenci
 ## Contribucion y funcionamiento de la clase <a name='app'></a>
 1. <b>Contribucion</b>: 
 Para ilustrar el diseño de la clase implementada en el respositorio, se utiliza la siguiente grafica:
-![](FlowGraph.png)
+![](data/FlowGraph.png)
 <p style='text-align: justify;'>Notese que la estructura del PRI junto con su componentes se conservan intactos, es en la solucion donde se realizan las contribuciones, adicionando dos alternativas como son: el gradiente descendiente y el gradiente descendiente por lotes. De igual manera, se pone a disposicion del usuario el uso de optimizadores para las tecnicas de los gradientes, como lo son el Nadam y el Adam. Finalmente, en la seccion de resultados se complementa el PRI con algoritmos como el SpectralCLustering o el Kmeans para brindar la facultad de estimacion de estiquetas, brindando a la metodologia inicial alcances de caracter supervisado, sin embargo su naturaleza no supervisada se mantiene entregando versatilidad al usuario y sus necesidades.</p>
 <p style='text-align: justify;'>2. <b>Funcionamiento</b>: Con la finalidad de conocer mas acerca de la funcion y sus parametros se ilustra de manera interactiva la manera de acceder al menu de ayuda de la clase, alli encontrara una descripcion completa de la mismaa, desde sus entradas hasta sus salidas y como configurarlas de acuerdo a sus necesidades:</p>
 
-![](help.png)
+![](data/help.png)
 
 <p style='text-align: justify;'>Por cuestiones esteticas y de espacio en esta seccion no se ilustra todo el contenido del comando 'help' implementado. Adicionalmente, puede encontrar una guia didactica del funcionamiento de la clase en el notebook con nombre 'Cuaderno_guia.ipynb'</p>.
 
