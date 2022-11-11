@@ -32,8 +32,11 @@ $$k(x,y)=<\varphi(x), \varphi(y)>\approx z(x)^\intercal z(y)$$
 Porque esta aproximacion es una buena idea y porque funciona? el teorema de representacion indica que la solucion optima es la suma de funciones kernel ponderadas en nuestras observaciones. Por tanto, si tenemos una buena aproximacion $\varphi(\cdot)$, entonces 
 
 $$f^*(x)=\sum_{n=1}^N\alpha_nk(x_n,x)$$
+
 $$=\sum_{n=1}^N\alpha_n<\varphi(x_n),\varphi(x)>$$
+
 $$\approx\sum_{n=1}^N\alpha_n z(x_n)^\intercal z(x)$$
+
 $$=\beta^\intercal z(x)$$
 
 Dado la funcion $z(\cdot)$ se puede afirmar que es una buena aproximacion de $\varphi(\cdot)$, por tanto, se puede simplemente proyectar los datos utilizando $z(\cdot)$. Finalmente, la tarea consiste en encontrar una proyeccion aleatoria $z(\cdot)$ tal que, dicha proyeccion aproxime la maquina kernel correspondiente.
@@ -48,7 +51,9 @@ $$h:x\rightarrow \exp(iw^\intercal x)$$
 de la formula anterior $i$ hace referencia a la unidad imaginaria. Ahora, denotando la conjugada compleja con $*$ se tiene
 
 $$E_w[h(x)h(y)^*]=E_w[\exp(iw^\intercal(x-y))]$$
+
 $$=\int_{\mathbb{R}^D}p(w)\exp(iw^\intercal(x-y))dw$$
+
 $$=\exp\left(-\frac{1}{2}(x-y)^\intercal(x-y)\right)$$
 
 En otras palabras, el valor esperado de $h(x)h(y)^*$ es el kernel gaussiano, lo cual a su vez una  instacia especifica de un resultado mas general, el cual consiste en el teorema de Bochner, que indica
@@ -90,14 +95,23 @@ El paso realizado en (1) es una aproximacion Monte Carlo de la esperanza. El pas
 Ahora que se comprende la gran idea de un mapa de baja dimension y aleatorio y el porque este funciona, se procede a profundizar el concepto. Iniciando con la distribucion normal $\mathcal{N}_D(O,I)$ y el kernel $k(\Delta)$
 
 $$\exp(iw^\intercal(x-y))=\cos(w^\intercal(x-y))-i \sin(w^\intercal(x-y))$$
+
 $$=\cos(w^\intercal(x-y))$$
+
 Ahora definiendo $z_w(x)$
+
 $$w\sim p(w)$$
+
 $$b\sim Uniform(0,2\pi)$$
+
 $$z_w(x)= \sqrt{2}\cos(w^\intercal x+b)$$
+
 Lo anterior se afirma porque 
+
 $$E_w[z_w(x)z_w(y)]=E[\sqrt{2}\cos(w^\intercal x+b)\cos(w^\intercal y+b)]$$
+
 $$=E_w[\cos(w^\intercal (x+y)+2b)]+E_w[\cos(w^\intercal (x-y))]$$
+
 $$=E_w[\cos(w^\intercal(x-y))]$$
 
 Ahora se procede a definir un mapa aleatorio $z:\mathbb{R}^D\rightarrow\mathbb{R}^R$ tal que $k(x,y)=<\varphi(x), \varphi(y)>\approx z(x)^\intercal z(y)$
@@ -112,7 +126,9 @@ $$z(x)=\begin{bmatrix}
 Por lo tanto
 
 $$z(x)^\intercal z(y)=\frac{1}{R}\sum_{r=1}^Rz_{w_r}(x)z_{w_r}(y)$$
+
 $$=\frac{1}{R}\sum_{r=1}^R2\cos(w_r^\intercal x+b_r)\cos(w_r^\intercal y+b_r)$$
+
 $$=\frac{1}{R}\sum_{r=1}^R\cos(w_r^\intercal(x-y))$$
 
 De la ecuacion anterior se tiene un algoritmo pora estimar un kernel definido positivo invariante al desplazamiento. Mediante el uso de $R$ muestras de $w\sim p(w)$ y $b\sim Uniform(0,2\pi)$ y luego calculando $z(x)^\intercal z(y)$
