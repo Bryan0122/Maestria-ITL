@@ -1,14 +1,18 @@
 # Tabla de contenido
 1. [Objetivo asociado al repositorio](#objetivo)
-2. [Maquinas Kernel](#Kernel)
-3. [Random features](#RFF)
-4. [Requerimientos](#req)
+2. [Diseño de la red Deep and Wide](#CNNDW)
+    1. [Maquinas Kernel](#RFF1)
+    2. [Random features](#RFF2)
+    2. [Random features](#RFF3)
+    2. [Random features](#RFF4)
+    
+5. [Requerimientos](#req)
 
 
 ## Objetivo especifico #2 <a name='objetivo'></a>
 <p style='text-align: justify;'>Desarrollar una metodología de clasificación basada en aprendizaje profundo y regularizadores por teoría de información, que involucren mapeos a espacios de Hilbert con núcleo reproductivo para codificar estructuras relevantes de datos y mitigar la alta variabilidad de las predicciones en escenarios con pocas muestras e incertidumbre en las etiquetas.</p>
 
-## Maquinas Kernel<a name='Kernel'></a>
+## Maquinas Kernel<a name='RFF1'></a>
 
 Considera un problema de aprendizaje con instacias y etiquetas ${(x_n, y_n)}_{n=1}^N$, donde $x_n \in X$ y $y_n \in Y$, ignorando el bias, un modelo lineal encuentra el hiperplano $w$ tal que la funcion de decision sea optima para cierta funcion de costo.
 $$f^*(x)=w^\intercal x (1)$$
@@ -23,7 +27,7 @@ $$f^*(x)=\sum_{i=1}^N\alpha_n k(x,x_n)=<w,\varphi(x)>v(3)$$
 
 Si $f^*(\cdot)$ denota el optimo de $f(\cdot)$. Se pueden juntar las ecuaciones (2) y (3), afirmando que teniendo una funcion kernel, la cual es dfinidamente positiva $k(\cdot,\cdot)$, se puede evitar operar bajo la posibilidad del espacio de dimension infinita $V$ y en cambio solo calcular sobre las $N$ instancias o muestras. Lo anterior tiene sentido debido a que la regla de decision optima puede ser expresada como una expansion en terminos de las instacias de entrenamiento.
 
-## Random features<a name='RFF'></a>
+## Random features<a name='RFF2'></a>
 
 En el escrito publicado en 2007, 'Random Features for Large-Scale Kernel Machines (Rahmi & Recht, 2007)' se propone un enfoque diferente, el cual consiste en aproximar el mapa aleatorio expuesto en (2) con un mapa aleatorio $z: \mathbb{R}^D\rightarrow \mathbb{R}^R$ donde idealmente $R \ll N$.
 
@@ -90,7 +94,7 @@ $$=h(x)h(y)^*(2)$$
 
 El paso realizado en (1) es una aproximacion Monte Carlo de la esperanza. El paso (2) es la definicion de un mapa aleatorio $h: \mathbb{R}^D\rightarrow\mathbb{R}^D$. Note que inicialmente se menciono el producto $z(x)^\intercal z(y)$ pero en la formula anterior se tiene $h(x)h(y)^*$. Sin embargo a continuacion se procede a eliminar la parte imaginaria y la nueva transformada es la que Rahimi y Recht llamaron $z$.
 
-## Fine tuning
+## Fine tuning<a name='RFF3'></a>
 
 Ahora que se comprende la gran idea de un mapa de baja dimension y aleatorio y el porque este funciona, se procede a profundizar el concepto. Iniciando con la distribucion normal $\mathcal{N}_D(O,I)$ y el kernel $k(\Delta)$
 
@@ -133,7 +137,7 @@ $$=\frac{1}{R}\sum_{r=1}^R\cos(w_r^\intercal(x-y))$$
 
 De la ecuacion anterior se tiene un algoritmo pora estimar un kernel definido positivo invariante al desplazamiento. Mediante el uso de $R$ muestras de $w\sim p(w)$ y $b\sim Uniform(0,2\pi)$ y luego calculando $z(x)^\intercal z(y)$
 
-## Ejemplo de kernel Gaussiano
+## Ejemplo de kernel Gaussiano<a name='RFF4'></a>
 
 Se procede a realizar la aproximacion del kernel gaussiano usando Random Fourier Features. Para tal fin, se utilizan $R$ muestras  $w$ las cuales estan identicamente distribuidas e independientes, posteriormente.
 
