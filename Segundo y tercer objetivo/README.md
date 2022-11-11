@@ -63,19 +63,13 @@ Rahimi y Recht observaron que muchos de los kernels, como el gaussiano (o las fu
 $$k(x,y)=k(x-y)$$
 
 $$=\int p(w)\exp(iw^\intercal(x-y))dw$$
+
 $$=E_w[\exp(iw^\intercal(x-y))]$$
-$$\approx\frac{1}{R}\sum_{r=1}^R\exp(iw^\intercal(x-y))\: (1)$$
-$$=\begin{bmatrix}
-\frac{1}{\sqrt{R}}\exp\left(iw_1^\intercal x\right)\\ 
-\frac{1}{\sqrt{R}}\exp\left(iw_2^\intercal x\right)\\ 
-\vdots \\ 
-\frac{1}{\sqrt{R}}\exp\left(iw_R^\intercal x\right)
-\end{bmatrix} \begin{bmatrix}
-\frac{1}{\sqrt{R}}\exp\left(iw_1^\intercal y\right)\\ 
-\frac{1}{\sqrt{R}}\exp\left(iw_2^\intercal y\right)\\ 
-\vdots \\ 
-\frac{1}{\sqrt{R}}\exp\left(iw_R^\intercal y\right)
-\end{bmatrix}$$
+
+$$\approx\frac{1}{R}\sum_{r=1}^R\exp(iw^\intercal(x-y))$$
+
+$$=\begin{bmatrix} \frac{1}{\sqrt{R}}\exp\left(iw_1^\intercal x\right)\\ \frac{1}{\sqrt{R}}\exp\left(iw_2^\intercal x\right)\\ \vdots \\ \frac{1}{\sqrt{R}}\exp\left(iw_R^\intercal x\right) \end{bmatrix} \begin{bmatrix} \frac{1}{\sqrt{R}}\exp\left(iw_1^\intercal y\right)\\ \frac{1}{\sqrt{R}}\exp\left(iw_2^\intercal y\right)\\ \vdots \\ \frac{1}{\sqrt{R}}\exp\left(iw_R^\intercal y\right) \end{bmatrix}$$
+
 $$=h(x)h(y)^*(2)$$
 
 El paso realizado en (1) es una aproximacion Monte Carlo de la esperanza. El paso (2) es la definicion de un mapa aleatorio $h: \mathbb{R}^D\rightarrow\mathbb{R}^D$. Note que inicialmente se menciono el producto $z(x)^\intercal z(y)$ pero en la formula anterior se tiene $h(x)h(y)^*$. Sin embargo a continuacion se procede a eliminar la parte imaginaria y la nueva transformada es la que Rahimi y Recht llamaron $z$.
