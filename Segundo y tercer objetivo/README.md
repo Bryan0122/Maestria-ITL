@@ -3,8 +3,8 @@
 2. [Diseño de la red Deep and Wide](#CNNDW)
     1. [Maquinas Kernel](#RFF1)
     2. [Random features](#RFF2)
-    2. [Random features](#RFF3)
-    2. [Random features](#RFF4)
+    3. [Fine tuning](#RFF3)
+    4. [Ejemplo de kernel Gaussiano](#RFF4)
     
 5. [Requerimientos](#req)
 
