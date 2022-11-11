@@ -11,13 +11,13 @@
 ## Maquinas Kernel<a name='Kernel'></a>
 
 Considera un problema de aprendizaje con instacias y etiquetas ${(x_n, y_n)}_{n=1}^N$, donde $x_n \in X$ y $y_n \in Y$, ignorando el bias, un modelo lineal encuentra el hiperplano $w$ tal que la funcion de decision sea optima para cierta funcion de costo.
-$$f^*(x)=w^\intercal x \;\;\;\;\;\;(1)$$
+$$f^*(x)=w^\intercal x (1)$$
 
 Sin embargo, los modelos lineales tienen limitaciones, en especial cuando los datos no son linealmente separables para su clasificacion o no existe una relacion lineal entre las instancias y las etiquetas para la tarea. Como alternativa a tales limitaciones, existen metodos como las maquinas kernel o tambien conocidos como metodos kernel, donde el conjunto de entrada $X$ es mapeado dentro de otro espacio $V$ in el cual las etiquetas pueden ser una funcion lineal de los datos. Sin embargo, la dimension de $V$ puede tener una dimension muy alta o incluso infinita, para lo cual entre los metodos kernel se previene operar explicitamente en ese espacio mediante el uso del 'kernel trick', el cual establece que si $k: X \times X \rightarrow \mathbb{R}$ es un kernel definido positivo, entonces por el teorema de Mercer existe una funcion base o 'feature map' $\varphi:X\rightarrow V$ de manera que:
-$$k(x,y)=<\varphi(x),\varphi(y)>v\;\;\;\;\;\;(2)$$
+$$k(x,y)=<\varphi(x),\varphi(y)>v (2)$$
 $<\cdot,\cdot>v$ es el producto interno en $V$. Dado lo anterior, mediante el kernel trick y el teorema de representacion, los metodos kernel construyen modelos no lineales de $X$ que son lineales en $k(\cdot,\cdot)$
 
-$$f^*(x)=\sum_{i=1}^N\alpha_n k(x,x_n)=<w,\varphi(x)>v\;\;\;\;\;\;(3)$$ 
+$$f^*(x)=\sum_{i=1}^N\alpha_n k(x,x_n)=<w,\varphi(x)>v(3)$$ 
 
 ![](data/example_1.png)
 
@@ -77,6 +77,7 @@ $$=\begin{bmatrix}
 \frac{1}{\sqrt{R}}\exp\left(iw_R^\intercal y\right)
 \end{bmatrix}$$
 $$=h(x)h(y)^*(2)$$
+
 El paso realizado en (1) es una aproximacion Monte Carlo de la esperanza. El paso (2) es la definicion de un mapa aleatorio $h: \mathbb{R}^D\rightarrow\mathbb{R}^D$. Note que inicialmente se menciono el producto $z(x)^\intercal z(y)$ pero en la formula anterior se tiene $h(x)h(y)^*$. Sin embargo a continuacion se procede a eliminar la parte imaginaria y la nueva transformada es la que Rahimi y Recht llamaron $z$.
 
 ## Fine tuning
