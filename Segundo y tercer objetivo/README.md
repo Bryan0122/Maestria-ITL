@@ -68,7 +68,18 @@ $$=E_w[\exp(iw^\intercal(x-y))]$$
 
 $$\approx\frac{1}{R}\sum_{r=1}^R\exp(iw^\intercal(x-y))$$
 
-$$=\begin{bmatrix} \frac{1}{\sqrt{R}}\exp\left(iw_1^\intercal x\right)\\ \frac{1}{\sqrt{R}}\exp\left(iw_2^\intercal x\right)\\ \vdots \\ \frac{1}{\sqrt{R}}\exp\left(iw_R^\intercal x\right) \end{bmatrix} \begin{bmatrix} \frac{1}{\sqrt{R}}\exp\left(iw_1^\intercal y\right)\\ \frac{1}{\sqrt{R}}\exp\left(iw_2^\intercal y\right)\\ \vdots \\ \frac{1}{\sqrt{R}}\exp\left(iw_R^\intercal y\right) \end{bmatrix}$$
+$$=\begin{bmatrix} 
+\frac{1}{\sqrt{R}}\exp\left(iw_1^\intercal x\right)\\ 
+\frac{1}{\sqrt{R}}\exp\left(iw_2^\intercal x\right)\\ 
+\vdots\\ 
+\frac{1}{\sqrt{R}}\exp\left(iw_R^\intercal x\right) 
+\end{bmatrix} 
+\begin{bmatrix} 
+\frac{1}{\sqrt{R}}\exp\left(iw_1^\intercal y\right)\\ 
+\frac{1}{\sqrt{R}}\exp\left(iw_2^\intercal y\right)\\ 
+\vdots \\ 
+\frac{1}{\sqrt{R}}\exp\left(iw_R^\intercal y\right)
+\end{bmatrix}$$
 
 $$=h(x)h(y)^*(2)$$
 
