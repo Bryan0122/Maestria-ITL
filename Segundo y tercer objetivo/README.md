@@ -10,7 +10,6 @@
     1. [GradCam](#GC)
     2. [ScoreCam](#SC)
     3. [Saliency](#Sa)
-    4. [Gradcam++](#GCp)
 5. [Contribucion y funcionamiento](#app)
 6. [Requerimientos](#req)
 
@@ -48,7 +47,7 @@ $X: Instacias\ originales$<br>
 $X': Instacias\ procesados $
 
 
-De la anterior ecuacion se resalta la semejanza con la función de costo establecida en el método del principio de informacion relevante [PRI](https://github.com/Bryan0122/Maestria-ITL/tree/main/Primer%20Objetivo), donde mediante el mismo principio se decide expandir el enfoque, siendo para este caso, el uso de dicha funcion en tareas de carácter semi-supervisado. Incialmente, la primer mitad de la ecuacion hace alusion a una ecuacion de naturaleza supervisada, pues expresa la relacion entre el conjunto de etiquetas originales y su respectiva estimacion. Seguidamente, en la segunda mitad de la ecuacion se evidencia una parte de control de estructura, que es la parte no supervisada, donde  se busca brindar solidez en la estructura de los datos y restar importancia a la etiquetas, reiterando la premisa de incertidumbre en el etiquetado para instancias de gran variabilidad. Cabe resaltar que es en esta ultima etapa donde la capa RFF desarrolla un papel fundamental al elaborar la funcion kernel que se incorpora posteriormente en la función de entropia.
+De la anterior ecuacion se resalta la semejanza con la función de costo establecida en el método del principio de informacion relevante [PRI](https://github.com/Bryan0122/Maestria-ITL/tree/main/Primer%20Objetivo), donde partiendo del mismo principio se decide expandir el enfoque, siendo para este caso, el uso de dicha funcion en tareas de carácter semi-supervisado. Incialmente, la primer mitad de la ecuacion hace alusion a una ecuacion de naturaleza supervisada, pues expresa la relacion entre el conjunto de etiquetas objetivo y su respectiva estimacion. Seguidamente, en la segunda mitad de la ecuacion se evidencia una parte de control de estructura, que es la parte no supervisada, donde  se busca brindar solidez en la estructura de los datos y restar importancia a la etiquetas, reiterando la premisa de incertidumbre en el etiquetado para instancias de gran variabilidad. Cabe resaltar que es en esta ultima etapa donde la capa RFF desarrolla un papel fundamental al elaborar la funcion kernel que se incorpora posteriormente en la función de entropia.
 
 ## Maquinas Kernel<a name='RFF1'></a>
 
@@ -198,4 +197,52 @@ LLevando a la practica lo expuesto se tiene que a mayor dimension de R la simili
 ![Alt text](data/example_2.png)
 
 ## Objetivo especifico #3 <a name='objetivo'></a>
-<p style='text-align: justify;'>Desarrollar una metodología de clasificación basada en aprendizaje profundo y regularizadores por teoría de información, que involucren mapeos a espacios de Hilbert con núcleo reproductivo para codificar estructuras relevantes de datos y mitigar la alta variabilidad de las predicciones en escenarios con pocas muestras e incertidumbre en las etiquetas.</p>
+
+<p style='text-align: justify;'>Implementar estrategias de análisis de relevancia basadas en mapas de activación de clase, para cuantificar la importancia de las características de entrada que alimentan la metodología de clasificación basada en aprendizaje profundo y regularizadores por teoría de información.</p>
+
+## Mapas de atencion <a name='AM'></a>
+
+Los modelos basados en redes neuronales tienen un buen rendimiento en gran variedad de dominios, tales como vision por computador, sistemas de recomendacion, procesamiento del lenguaje natural, etc. Sin embargo, en areas como salud, finanzas y defensa, dichos modelos fallan en cuanto a explicabilidad, razon por la cual, para el caso especial de analisis se han implementado mecanismos que encuentra la region mas importante en terminos de la tarea de clasificacion de acuerdo a la imagen de entrada, donde dicha zona revela que zonas de la imagen son cruciales para al modelo al momento de tomar una decision, develando informacion importante acerca de la red, su comportamiento y de la tarea que se esta desarrollando. Para abordar estos mecanismos se exponen las siguientes alternativas:
+
+## GradCam<a name='GC'></a>
+
+En terminos generales se inicia calculando el gradiente de $y^c$ con respecto a los mapas de caracteristicas $A$ de la capa convolucional. Dichos gradientes retornar a un promerio global obteniendo los pesos 
+
+$$\alpha^c_k=\frac{1}{Z}\sum_i\sum_j \frac{\partial y^c}{\partial A^k_{ij}}$$
+
+- $Z$ es el numero total de caracteristicas .
+- $y^c\rightarrow$ Puntaje ded activacion de la clase $c$.
+- $\alpha^c_k$ Representa una linealizacioon parcial de la red neuronal desde el mapa de caracteristicas $A$ y captura la importancia del mapa de caracteristicas.
+
+Finalmente el mapa de calor res una combinacion de el mapa de caracteristicas con los pesos pero integrados en una funcion RELU
+$$L^c_{Grad-Cam}=ReLU\left(\sum_k\alpha^c_kA^k\right)$$
+
+- La moticavion para usar la Relu consiste en el interes de las caracteristicas con una influencia positiva en la clase de interes, es decir, en los pixeles cuya intensidad se incrementa en medida que $y^c$ incrementa.
+
+## ScoreCam<a name='SC'></a>
+
+Dada una CNN $Y =f(X)$ que toma una entrada $X$ y salidas $Y$. Se toma inicialmente una capa convolucional $l$ en $f$ y la correspondiente activacion $A$. 
+
+$$C(A_l^k)=f(X\circ H_l^k)-f(X_b)$$
+
+donde
+
+$$H_l^k = s(Up(A_l^k))$$
+
+$Up(\cdot)$ denota la operacion que sobremuestrea $A_l^k$ en el tamaño de entrada y $s(\cdot)$  es una funcion de normalizacion que ajusta cada elemento de la matriz de entrada de $[0,1]$
+
+$$s(A_l^k)= \frac{A_l^k-min A_l^k}{max A_l^k- min A_l^k} $$
+
+- La parte de normalizacion incrementa la confianza en la funcion, lo cual resulta esencial para la creacion de una mascara binaria
+
+$$L_{Score-CAM}^c= relu \left( \sum_k \alpha_k^c A_l^k\right)$$
+
+$$\alpha_k^c=C(A_l^k)$$
+
+## Saliency<a name='Sa'></a>
+
+Saliency genera un mapa de prominencia compartiendo conceptos de Grad-CaM, siguiendo la siguiente filosofia
+$$L_{ij}^c = relu \left(\sum_k w_k^c A_{ij}^k \right)$$
+
+
+
