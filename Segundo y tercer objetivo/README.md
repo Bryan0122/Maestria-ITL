@@ -5,11 +5,50 @@
     2. [Random features](#RFF2)
     3. [Fine tuning](#RFF3)
     4. [Ejemplo de kernel Gaussiano](#RFF4)
-5. [Requerimientos](#req)
-
+3. [Segundo objetivo asociado al repositorio](#objetivo2)
+4. [Mapas de atencion](#AM)
+    1. [GradCam](#GC)
+    2. [ScoreCam](#SC)
+    3. [Saliency](#Sa)
+    4. [Gradcam++](#GCp)
+5. [Contribucion y funcionamiento](#app)
+6. [Requerimientos](#req)
 
 ## Objetivo especifico #2 <a name='objetivo'></a>
 <p style='text-align: justify;'>Desarrollar una metodología de clasificación basada en aprendizaje profundo y regularizadores por teoría de información, que involucren mapeos a espacios de Hilbert con núcleo reproductivo para codificar estructuras relevantes de datos y mitigar la alta variabilidad de las predicciones en escenarios con pocas muestras e incertidumbre en las etiquetas.</p>
+
+## Diseño de la Red amplia y profunda<a name='CNNDW'></a>
+
+La propuesta para el presente objetivo consiste en el desarrollo de una red neuronal convolucional, de tipo amplia y profunda (aunque tambien se puede trabajarse solo en modo profundo), la cual integre en su funcion de costo metodologias basadas en teorias de informacion, con la finalidad de que se mejore la etapa de clasificacion mediante la reduccion de incertidumbre que se tiene en las etiquetas o en escenarios de gran variabilidad. Para tal fin, se procede a describir la red que es expuesta a continuacion 
+
+![Alt text](data/model.png)
+
+- <b>IN1:</b> Capa de entrada, la cual puede trabajarse en modo amplio y profundo, o exclusivamente profundo.  
+- <b>CN2:</b> Primer capa de convolucion.
+- <b>BN3:</b> Primer capa de normalizacion. 
+- <b>MP4:</b> Primer capa de pooling.
+- <b>BN5:</b> Segunda capa de normalizacion.
+- <b>CT6:</b> Capa de concatenacion.
+- <b>FL7:</b> Capa de flatten o aplanamiento.
+- <b>DO8:</b> Capa de dropout.
+- <b>DE9:</b> Capa densa.
+- <b>RFF:</b> Capa RFF.
+- <b>BN11:</b> capa de normalizacion.
+- <b>OU12:</b> capa de densa de salida.
+
+Del anterior diseño se destacan dos etapas. La primera que consiste en la representacion de datos mediante una funcion kernel (capa RFF10), en esta se pretende explotar la correlacion espacial de las imagenes de entrada, para el cual una capa kernel de la forma $N \times N$ explora la relacion de patrones espaciales, adicionalmente permite representar los datos sin la limitante que tienen las funciones kernel y su dimensionalidad que tiende al infinito, aspecto que brinda un grado de libertad a la red neuronal, como tambien la capacidad de con esta capa incorporar funciones basadas en teorias de informacion. Para comprender mejor el concepto de la capa RFF se recomienda observar los indices: Maquinas Kernel, Random features, fine tuning y Ejemplo kernel Gaussiano. La segunda etapa consiste en la salida de la red neuronal, la etapa de clasificacion, donde la funcion de costo se expresa mediante:
+
+$$L(y,\hat{y}|X)=\lambda H(y;\hat{y})+(1-\lambda)H_2(K(X,X'))$$
+
+Variables:
+
+$y: Etiquetas$<br>
+$\hat{y}: Etiquetas\:estimadas$<br>
+$X: Datos\:originales$<br>
+$X': Datos\:$
+
+
+De la anterior ecuacion se resalta la semejanza con la función de costo establecida en el método del principio de informacion relevante [PRI](https://github.com/Bryan0122/Maestria-ITL/tree/main/Primer%20Objetivo), donde mediante el mismo principio se decide expandir el enfoque, siendo para este caso el uso de tareas de carácter semi-supervisado, donde en la primer mitad de la ecuacion  se mezcla el una etapa de clasificación completamente supervisada, con una parte de control de estructura que es la parte no supervisada y es en esta ultima donde capa RFF desarrolla un papel fundamental al elaborar la funcion kernel que se incorpora posteriormente en la función de entropia.
 
 ## Maquinas Kernel<a name='RFF1'></a>
 
@@ -157,3 +196,6 @@ z(x_N)
 LLevando a la practica lo expuesto se tiene que a mayor dimension de R la similitud con la funcion kernel es mayor, dando por finiquitado la demostracion y explicacion de Random Fourier Features
 
 ![Alt text](data/example_2.png)
+
+## Objetivo especifico #3 <a name='objetivo'></a>
+<p style='text-align: justify;'>Desarrollar una metodología de clasificación basada en aprendizaje profundo y regularizadores por teoría de información, que involucren mapeos a espacios de Hilbert con núcleo reproductivo para codificar estructuras relevantes de datos y mitigar la alta variabilidad de las predicciones en escenarios con pocas muestras e incertidumbre en las etiquetas.</p>
