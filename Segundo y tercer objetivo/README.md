@@ -43,12 +43,12 @@ $$L(y,\hat{y}|X)=\lambda H(y;\hat{y})+(1-\lambda)H_2(K(X,X'))$$
 Variables:
 
 $y: Etiquetas$<br>
-$\hat{y}: Etiquetas\:estimadas$<br>
-$X: Datos\:originales$<br>
-$X': Datos\:$
+$\hat{y}: Etiquetas\ estimadas$<br>
+$X: Instacias\ originales$<br>
+$X': Instacias\ procesados $
 
 
-De la anterior ecuacion se resalta la semejanza con la función de costo establecida en el método del principio de informacion relevante [PRI](https://github.com/Bryan0122/Maestria-ITL/tree/main/Primer%20Objetivo), donde mediante el mismo principio se decide expandir el enfoque, siendo para este caso el uso de tareas de carácter semi-supervisado, donde en la primer mitad de la ecuacion  se mezcla el una etapa de clasificación completamente supervisada, con una parte de control de estructura que es la parte no supervisada y es en esta ultima donde capa RFF desarrolla un papel fundamental al elaborar la funcion kernel que se incorpora posteriormente en la función de entropia.
+De la anterior ecuacion se resalta la semejanza con la función de costo establecida en el método del principio de informacion relevante [PRI](https://github.com/Bryan0122/Maestria-ITL/tree/main/Primer%20Objetivo), donde mediante el mismo principio se decide expandir el enfoque, siendo para este caso, el uso de dicha funcion en tareas de carácter semi-supervisado. Incialmente, la primer mitad de la ecuacion hace alusion a una ecuacion de naturaleza supervisada, pues expresa la relacion entre el conjunto de etiquetas originales y su respectiva estimacion. Seguidamente, en la segunda mitad de la ecuacion se evidencia una parte de control de estructura, que es la parte no supervisada, donde  se busca brindar solidez en la estructura de los datos y restar importancia a la etiquetas, reiterando la premisa de incertidumbre en el etiquetado para instancias de gran variabilidad. Cabe resaltar que es en esta ultima etapa donde la capa RFF desarrolla un papel fundamental al elaborar la funcion kernel que se incorpora posteriormente en la función de entropia.
 
 ## Maquinas Kernel<a name='RFF1'></a>
 
