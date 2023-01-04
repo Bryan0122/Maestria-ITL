@@ -244,5 +244,6 @@ $$\alpha_k^c=C(A_l^k)$$
 Saliency genera un mapa de prominencia compartiendo conceptos de Grad-CaM, siguiendo la siguiente filosofia
 $$L_{ij}^c = relu \left(\sum_k w_k^c A_{ij}^k \right)$$
 
-
+## Contribucion y funcionamiento<a name='app'></a>
+![Alt text](data/flowchart.png)
 
