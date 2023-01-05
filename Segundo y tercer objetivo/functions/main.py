@@ -17,30 +17,89 @@ from sklearn.cluster import KMeans, SpectralClustering
  
 
 def conv_to_list(arr):
+    """Ajustar el conjunto a forma Deep and Wide.
+
+    Parameters
+    ----------
+    arr : {array-like, sparse matrix} de la forma (número de muestras, canales, tiempo, banda de frecuencia, metodo (csp o cwt) )
+      Conjunto de  muestras.
+
+    Returns
+    -------
+    X_pre : {array-like, sparse matrix} de la forma (número de muestras, canales, tiempo, banda de frecuencia, metodo (csp o cwt) )
+      Conjunto de  muestras ordenado.
+    """
     x_pre = []
     for i in range(arr.shape[-1]):
         x_pre.append(arr[:, :, :, :, i])
     return x_pre
-  
-def labels_convert(labels_pre, labels_true):
-    labels_conv = np.zeros(labels_pre.shape)
-    u = np.unique(labels_pre)
-    ve = []
-    for i in u:
-        val = stats.mode(labels_true[labels_pre == i], 0)[0]
-        ve.append(val[0])
-        labels_conv[labels_pre == i] = val
-    return labels_conv.astype('int')
- 
+   
 def plot_model_(history_):
     pd.DataFrame(history_.history).plot(figsize=(5, 5))
     plt.grid(True)
     plt.show()
  
 class CNNrITL(BaseEstimator):
+  '''Red neuronal convolucional de tipo Deep and Wide ó solo Wide que incorpora cuya funcion de costo 
+  utiliza herramientas de teoria de informacion, de manera que se tenga una funcion de costo regularizada que se inspira en 
+  el principio de informacion revelante o PRI por sus siglas en ingles.
+
+  Parámetros
+  ----------
+
+  d: float, default=2
+    Dimensiones de la capa densa, sin embargo este valor se ve influenciado por el tamaño de la capa Flatten.
+  
+  sigma: float, default=None 
+    Sigma para la funcion kernel de la capa de Random Fourier Features.
+
+  k: int, default=2
+    Numero de posibles salidas de la red neuronal.
+
+  verbose: int, default=10
+    Detalles de entrenamiento de la red neuronal.
+
+  n_fill: int, default=1
+    Cantidad de filtros para la capa convolucional.
+
+  epochs: int, default=200
+    Cantidad de epocas de entrenamiento para la red neuronal.
+
+  batch_size: int, default=128
+    Tamaño del lote para entrenamiento de la red neuronal.
+  
+  lr: float, default=1e-3
+    Coeficiente de aprendizaje de la red neuronal.
+
+  sl: str, default='ritl'
+    Posibles funciones de costo de la red neuronal.
+    'ce' para solo crossentropy.
+    'MSE' para MeanSquaredError.
+  
+  lk: float, default=0.5
+    Nivel de supervicion para la funcion de costo ritl, siendo 0 el menor valor y 1 el mayor.
+
+  l1: float, default=1e-3
+    Constante de regularizacion L1 y L2 para la funcion densa.
+  
+  wi: bool, default=True
+    Modo Deep an Wide.
+
+  plot_model: bool, default=True
+    Mostrar graficas de rendimiento durante la fase de entrenamiento
+  
+  Atributos
+  ---------
+  model : Tensor
+    Un tensor originado de una entrada o un conjunto de entradas (Deep and Wide o Wide). 
+
+  labels_ : ndarray de forma (número de muestras)
+    Etiquetas estimadas para cada una de las muestras.
+
+  '''
   def __init__(self, d=2, sigma=None, k=2, verbose=10, n_fil=1,
                 epochs=200, batch_size=128, lr=1e-3, sl='ritl',
-                lk=0.5, l1=1e-3, wi=True, sbj=1, plot_model=True):
+                lk=0.5, l1=1e-3, wi=True, plot_model=True):
     self.verbose = verbose
     self.sigma = sigma
     self.d = d
@@ -52,7 +111,6 @@ class CNNrITL(BaseEstimator):
     self.sl = sl
     self.lk = lk
     self.l1 = l1
-    self.sbj = sbj
     self.wi = wi
     self.plot_model = plot_model
       
@@ -168,7 +226,18 @@ class CNNrITL(BaseEstimator):
     return model
 
   def predict(self, x_test):
+    """Predice la pertenencia de nuevas muestras al grupo estimado mas cercano.
 
+    Parameters
+    ----------
+    x_test : {array-like, sparse matrix} de la forma (número de muestras, número de características)
+      Conjunto de nuevas muestras.
+
+    Returns
+    -------
+    label_e : ndarray de la forma (número de muestras,)
+      Etiqueta a la cual cada una de las muestras es asociada.
+    """
     if self.wi:
       x_test_pre = conv_to_list(x_test)
     else:
@@ -208,7 +277,7 @@ class CNNrITL(BaseEstimator):
 
     return {'d': self.d, 'k': self.k, 'epochs': self.epochs, 'batch_size': self.batch_size,
             'lr': self.lr, 'sl': self.sl, 'lk': self.lk, 'l1': self.l1,
-            'wi': self.wi, 'sbj': self.sbj, 'verbose': self.verbose, 'n_fil': self.n_fil,
+            'wi': self.wi,  'verbose': self.verbose, 'n_fil': self.n_fil,
             'plot_model': self.plot_model}
 
   def set_params(self, **parameters):
