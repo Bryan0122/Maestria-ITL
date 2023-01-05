@@ -246,4 +246,15 @@ $$L_{ij}^c = relu \left(\sum_k w_k^c A_{ij}^k \right)$$
 
 ## Contribucion y funcionamiento<a name='app'></a>
 ![Alt text](data/flowchart.png)
+<b>1. Contribucion</b>: Al analizar el diagrama se notan inicialmente los elementos de color amarillo denotados en la leyenda como elementos con posibilidad con variacion, queriendo decir que de acuerdo a la seleccion del usuario y el uso de la red, se cambia la arquitectura de la misma, ya sea para un modo de tipo Deep and Wide o exclusivamente Deep. Sin embargo, dicha seleccion no afecta las contribuciones de los objetivos dos y tres.
 
+Continuando con el analisis del segundo objetivo, se resalta que el principal impacto yace en la funcion de costo, donde mediante la capa RFF y la funcion de entropia cruzada se puede generar una funcion de costo regularizada que tiene un parecido a la funcion del principio de informacion relevante o PRI. Cabe destacar, que la funcion junto a la entropia cruzada es una funcion creada que utiliza la capa RFF para generar la entropia de segundo orden de Renyi. Finalmente, se deja a eleccion del usuario multiples alternativas de manera que se pueda ajustar la red de acuerdo al problema o las necesidades del mismo.
+
+Finalmente, respecto a la contribuicion del tercer objetivo, se resalta que no existe una creacion propia puesto que se utilizan herramientas ya existentes en el estado del arte, no obstante, lo importante para este caso particular reside en la seleccion de la capa donde se realiza el analisis. Pues en dicha capa se tiene la informacion directa de las imagenes de entrada, soportando de esta manera el concepto de interpretabilidad. Adicionalmente, se ponen a disposicion mutiples opciones para poder obtener los mapas de prominencia.
+
+<b>2. Funcionamiento</b>: Con la finalidad de conocer mas acerca de la funcion y sus parametros se ilustra de manera interactiva la manera de acceder al menu de ayuda de la clase, alli encontrara una descripcion completa de la misma, desde sus entradas hasta sus salidas y como configurarlas de acuerdo a sus necesidades:
+![Alt text](data/help.png)
+Por cuestiones esteticas y de espacio en esta seccion no se ilustra todo el contenido del comando 'help' implementado. Adicionalmente, puede encontrar una guia didactica del funcionamiento de la clase en el notebook con nombre 'Cuaderno_guia.ipynb'
+
+## Requerimientos<a name='req'></a>
+Para el correcto funcionamiento de la clase se le sugiere revisar la lista de requerimientos de librerias ilustradas en el archivo 'requirements.txt'.
